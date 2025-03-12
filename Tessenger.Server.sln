@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.35821.62
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tessenger.Server", "Tessenger.Server\Tessenger.Server.csproj", "{8D922896-305D-469F-9ED6-6B861854162D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D922896-305D-469F-9ED6-6B861854162D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D922896-305D-469F-9ED6-6B861854162D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D922896-305D-469F-9ED6-6B861854162D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D922896-305D-469F-9ED6-6B861854162D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {877AEEAD-C867-4BC5-911A-46E09D644098}
+	EndGlobalSection
+EndGlobal
