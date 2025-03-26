@@ -32,7 +32,7 @@ app.MapHub<FriendHub>("/hubs/friendhub");
 app.MapHub<GroupHub>("/hubs/grouphub");
 app.MapHub<NotificationHub>("/hubs/notificationhub");
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
