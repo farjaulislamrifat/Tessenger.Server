@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Tessenger.Server.Models
 {
-    public class User_Information
+    public class User_Information_Model
     {
         [Key]
         [Column("id")]
-        public int Id { get; set; }
+        public ulong Id { get; set; }
 
         [Column("username")]
         [Required]

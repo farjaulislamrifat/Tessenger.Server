@@ -23,16 +23,16 @@ namespace Tessenger.Server.Controllers
 
         // GET: api/SocialMedias
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SocialMedia>>> GetSocialMedia()
+        public async Task<ActionResult<IEnumerable<Social_Media_Model>>> GetSocialMedia()
         {
-            return await _context.SocialMedia.ToListAsync();
+            return await _context.Social_Media_Model.ToListAsync();
         }
 
         // GET: api/SocialMedias/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<SocialMedia>> GetSocialMedia(int id)
+        public async Task<ActionResult<Social_Media_Model>> GetSocialMedia(uint id)
         {
-            var socialMedia = await _context.SocialMedia.FindAsync(id);
+            var socialMedia = await _context.Social_Media_Model.FindAsync(id);
 
             if (socialMedia == null)
             {
@@ -45,7 +45,7 @@ namespace Tessenger.Server.Controllers
         // PUT: api/SocialMedias/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSocialMedia(int id, SocialMedia socialMedia)
+        public async Task<IActionResult> PutSocialMedia(uint id, Social_Media_Model socialMedia)
         {
             if (id != socialMedia.Id)
             {
@@ -76,9 +76,9 @@ namespace Tessenger.Server.Controllers
         // POST: api/SocialMedias
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<SocialMedia>> PostSocialMedia(SocialMedia socialMedia)
+        public async Task<ActionResult<Social_Media_Model>> PostSocialMedia(Social_Media_Model socialMedia)
         {
-            _context.SocialMedia.Add(socialMedia);
+            _context.Social_Media_Model.Add(socialMedia);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetSocialMedia", new { id = socialMedia.Id }, socialMedia);
@@ -86,23 +86,23 @@ namespace Tessenger.Server.Controllers
 
         // DELETE: api/SocialMedias/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSocialMedia(int id)
+        public async Task<IActionResult> DeleteSocialMedia(uint id)
         {
-            var socialMedia = await _context.SocialMedia.FindAsync(id);
+            var socialMedia = await _context.Social_Media_Model.FindAsync(id);
             if (socialMedia == null)
             {
                 return NotFound();
             }
 
-            _context.SocialMedia.Remove(socialMedia);
+            _context.Social_Media_Model.Remove(socialMedia);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool SocialMediaExists(int id)
+        private bool SocialMediaExists(uint id)
         {
-            return _context.SocialMedia.Any(e => e.Id == id);
+            return _context.Social_Media_Model.Any(e => e.Id == id);
         }
     }
 }
