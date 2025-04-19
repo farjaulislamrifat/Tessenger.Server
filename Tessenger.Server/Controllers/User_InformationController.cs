@@ -21,7 +21,6 @@ namespace Tessenger.Server.Controllers
         private readonly IConfiguration _configuration;
         private readonly TessengerServerContext tessengerServerContext;
 
-
         public User_InformationController(IDbContextFactory<TessengerServerContext> context, IConfiguration configuration, TessengerServerContext tessengerServerContext)
         {
             _context = context;

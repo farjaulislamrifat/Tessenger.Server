@@ -37,7 +37,11 @@ namespace Tessenger.Server.Models
         public DateTime Date_Of_Birth { get; set; }
 
         [Column("social_medias")]
-        public List<int> Social_Medias { get; set; }
+        public List<ulong> Social_Medias { get; set; }
+        [Column("websites")]
+        public List<ulong> WebSites { get; set; }
+        [Column("educations")]
+        public List<ulong> Educations { get; set; }
 
         [Column("nationality")]
         [DataType(DataType.Text)]
@@ -65,6 +69,11 @@ namespace Tessenger.Server.Models
         [Column("authentationsecuritykey")]
         [DataType(DataType.Text)]
         public string Authentation_Security_Key { get; set; }
+        [Column("religion")]
+        [DataType(DataType.Text)]
+        public string Religion { get; set; }
+        [Column("address")]
+        public string Address { get; set; }
     }
   
 }

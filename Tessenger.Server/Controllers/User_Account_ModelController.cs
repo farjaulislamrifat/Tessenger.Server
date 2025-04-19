@@ -142,12 +142,10 @@ namespace Tessenger.Server.Controllers
             });
         }
 
-
         [HttpPut("PUT/Username/{username}")]
         public async Task<ActionResult<bool>> PutUser_Account_Model(string username, User_Account_Model user_Account_Model)
         {
-            username = await algorithoms.Decryption(username, configuration.GetSection("PublicKey").Value, configuration.GetSection("SecretKey").Value);
-
+           
             if (username != user_Account_Model.Username)
             {
                 return Ok(false);

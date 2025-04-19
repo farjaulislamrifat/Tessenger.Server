@@ -7,12 +7,16 @@ namespace Tessenger.Server.Models
     {
         [Key]
         [Column("id")]
-        public uint Id { get; set; }
+        public ulong Id { get; set; }
 
         [Column("social_media_name")]
         public string Social_Media_Name { get; set; }
 
         [Column("social_media_link")]
         public string Social_Media_Link { get; set; }
+        [Column("social_media_description")]
+        public string Social_Media_Description { get; set; }
+        [Column("date_added")]
+        public DateTime Date_Added { get; set; }
     }
 }

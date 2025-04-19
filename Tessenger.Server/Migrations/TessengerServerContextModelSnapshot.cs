@@ -22,6 +22,45 @@ namespace Tessenger.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Tessenger.Server.Models.Education_Model", b =>
+                {
+                    b.Property<decimal>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(20,0)")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
+
+                    b.Property<string>("Degree")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("degree");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("End_Date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("end_date");
+
+                    b.Property<string>("School_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("school_name");
+
+                    b.Property<string>("Start_Date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("start_date");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Education_Model");
+                });
+
             modelBuilder.Entity("Tessenger.Server.Models.Friend_Request_Send_Model", b =>
                 {
                     b.Property<long>("Id")
@@ -176,12 +215,21 @@ namespace Tessenger.Server.Migrations
 
             modelBuilder.Entity("Tessenger.Server.Models.Social_Media_Model", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<decimal>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("decimal(20,0)")
                         .HasColumnName("id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
+
+                    b.Property<DateTime>("Date_Added")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_added");
+
+                    b.Property<string>("Social_Media_Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("social_media_description");
 
                     b.Property<string>("Social_Media_Link")
                         .IsRequired()
@@ -376,6 +424,11 @@ namespace Tessenger.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("address");
+
                     b.Property<string>("Authentation_Authenticator_App")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -409,6 +462,11 @@ namespace Tessenger.Server.Migrations
                     b.Property<DateTime>("Date_Of_Birth")
                         .HasColumnType("datetime2")
                         .HasColumnName("date_of_birth");
+
+                    b.PrimitiveCollection<string>("Educations")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("educations");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -444,6 +502,11 @@ namespace Tessenger.Server.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("profile_picture");
 
+                    b.Property<string>("Religion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("religion");
+
                     b.PrimitiveCollection<string>("Social_Medias")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -454,9 +517,47 @@ namespace Tessenger.Server.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("username");
 
+                    b.PrimitiveCollection<string>("WebSites")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("websites");
+
                     b.HasKey("Id");
 
                     b.ToTable("User_Information_Model");
+                });
+
+            modelBuilder.Entity("Tessenger.Server.Models.Website_Model", b =>
+                {
+                    b.Property<decimal>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(20,0)")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
+
+                    b.Property<DateTime>("Date_Added")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("date_added");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("url");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Website_Model");
                 });
 #pragma warning restore 612, 618
         }
