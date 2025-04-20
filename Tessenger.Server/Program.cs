@@ -4,6 +4,7 @@ using Tessenger.Server.Data;
 using Tessenger.Server.Hubs;
 using Tessenger.Server.Algorithoms;
 using Tessenger.Server.Authentications;
+using Tessenger.Server.Users_Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Services.AddDbContext<TessengerServerContext>(options =>
 builder.Services.AddSingleton<IAlgorithoms, Algorithoms>();
 builder.Services.AddScoped<Service_AuthFillter>();
 builder.Services.AddScoped<Service_AuthFillter_Without_Connect>();
+builder.Services.AddScoped<User_Usernames_By_Connection>();
 
 
 // Add services to the container.

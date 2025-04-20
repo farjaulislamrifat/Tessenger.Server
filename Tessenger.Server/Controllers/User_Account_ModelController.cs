@@ -40,8 +40,7 @@ namespace Tessenger.Server.Controllers
         [HttpGet("GET/USERNAME/{username}")]
         public async Task<ActionResult<User_Account_Model>> GetUser_Account_Model(string username)
         {
-            username = await algorithoms.Decryption(username, configuration.GetSection("PublicKey").Value, configuration.GetSection("SecretKey").Value);
-
+           
             var user_Account_Model = _context.User_Account_Model.FirstOrDefault(c => c.Username == username);
 
             if (user_Account_Model == null)
@@ -66,7 +65,7 @@ namespace Tessenger.Server.Controllers
         [HttpGet("GET/Email/{email}")]
         public async Task<ActionResult<User_Account_Model>> GetUser_Account_ModelByEmail(string email)
         {
-            email = await algorithoms.Decryption(email, configuration.GetSection("PublicKey").Value, configuration.GetSection("SecretKey").Value);
+            
             var username = (await _contextFactory.CreateDbContextAsync()).User_Information_Model.FirstOrDefault(c => c.Email == email).Username;
 
             var user_Account_Model = _context.User_Account_Model.FirstOrDefault(c => c.Username == username);
@@ -82,9 +81,7 @@ namespace Tessenger.Server.Controllers
         [HttpGet("GET/Email_Password/Temp/{email}&{password}")]
         public async Task<ActionResult<User_Account_Model>> GetUser_Account_Model(string email, string password)
         {
-            email = await algorithoms.Decryption(email, configuration.GetSection("PublicKey").Value, configuration.GetSection("SecretKey").Value);
-            password = await algorithoms.Decryption(password, configuration.GetSection("PublicKey").Value, configuration.GetSection("SecretKey").Value);
-
+           
             var username = (await _contextFactory.CreateDbContextAsync()).User_Information_Model.FirstOrDefault(c => c.Email == email).Username;
             var user_Account_Model = _context.User_Account_Model.FirstOrDefault(c => c.Username == username && c.Password == password);
 
@@ -99,10 +96,7 @@ namespace Tessenger.Server.Controllers
         [HttpGet("GET/Username_Password/Temp/{username}&{password}")]
         public async Task<ActionResult<User_Account_Model>> GetUser_Account_ModelUsername_Password(string username, string password)
         {
-            username = await algorithoms.Decryption(username, configuration.GetSection("PublicKey").Value, configuration.GetSection("SecretKey").Value);
-            password = await algorithoms.Decryption(password, configuration.GetSection("PublicKey").Value, configuration.GetSection("SecretKey").Value);
-
-
+           
             var user_Account_Model = _context.User_Account_Model.FirstOrDefault(c => c.Username == username && c.Password == password);
 
             if (user_Account_Model == null)
@@ -115,7 +109,7 @@ namespace Tessenger.Server.Controllers
         [HttpGet("GET/User_Exists/{username}")]
         public async Task<ActionResult<bool>> GetUser_Exists(string username)
         {
-            username = await algorithoms.Decryption(username, configuration.GetSection("PublicKey").Value, configuration.GetSection("SecretKey").Value);
+            
             var User = (await _contextFactory.CreateDbContextAsync()).User_Account_Model.Any(c => c.Username == username);
             return Ok(User);
         }
@@ -205,3 +199,6 @@ namespace Tessenger.Server.Controllers
         }
     }
 }
+
+
+

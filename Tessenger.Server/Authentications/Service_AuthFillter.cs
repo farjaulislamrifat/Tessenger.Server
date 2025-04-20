@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Tessenger.Server.Hubs;
+using Tessenger.Server.Users_Identity;
 
 namespace Tessenger.Server.Authentications
 {
@@ -20,11 +21,11 @@ namespace Tessenger.Server.Authentications
 
             if(temp_header_Key == null)
             {
-                var user = AuthHub.User;
-                var t = user.Keys.FirstOrDefault(c => c.Contains(header_Key));
-                if (header_Key==t)
+                var user = User_Usernames_By_Connection.Users;
+                var t = user.Values.FirstOrDefault(c => c.Contains(header_Key));
+                if (t == null)
                 {
-
+                    context.Result = new UnauthorizedResult();
                 }
             }
             

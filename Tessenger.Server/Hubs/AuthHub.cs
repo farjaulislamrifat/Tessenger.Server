@@ -2,18 +2,18 @@
 using Microsoft.EntityFrameworkCore;
 using Tessenger.Server.Algorithoms;
 using Tessenger.Server.Data;
+using Tessenger.Server.Users_Identity;
 
 namespace Tessenger.Server.Hubs
 {
     public class AuthHub : Hub
     {
         public static IHubContext<AuthHub> _AuthHubContext { get; set; }
-        public static Dictionary<string, List<string>> User { get; set; } = new();
-        public static Dictionary<string, List<string>> GroupUser { get; set; } = new();
+
         private readonly IDbContextFactory<TessengerServerContext> serverContext;
         IConfiguration configuration { get; set; }
         IAlgorithoms algorithoms { get; set; }
-        public AuthHub(IHubContext<AuthHub> context, IDbContextFactory<TessengerServerContext> sc , IAlgorithoms algorithoms, IConfiguration configuration)
+        public AuthHub(IHubContext<AuthHub> context, IDbContextFactory<TessengerServerContext> sc, IAlgorithoms algorithoms, IConfiguration configuration)
         {
             serverContext = sc;
             _AuthHubContext = context;
@@ -23,8 +23,6 @@ namespace Tessenger.Server.Hubs
 
         public async void Add(string username, string password)
         {
-            username = await algorithoms.Decryption(username, configuration.GetSection("PublicKey").Value, configuration.GetSection("SecretKey").Value);
-            password = await algorithoms.Decryption(password, configuration.GetSection("PublicKey").Value, configuration.GetSection("SecretKey").Value);
 
             var connectionId = Context.ConnectionId;
 
@@ -34,9 +32,9 @@ namespace Tessenger.Server.Hubs
             {
                 foreach (var item in groups)
                 {
-                    if (!GroupUser.Any(c => c.Key == item.Username))
+                    if (!Group_UsernameMembers.Groups.Any(c => c.Key == item.Username))
                     {
-                        GroupUser.Add(item.Username, new List<string>());
+                        Group_UsernameMembers.Groups.Add(item.Username, new List<string>());
                     }
                 }
             }
@@ -45,13 +43,13 @@ namespace Tessenger.Server.Hubs
             {
                 if (user.Password == password)
                 {
-                    if (User.ContainsKey(username))
+                    if (User_Usernames_By_Connection.Users.ContainsKey(username))
                     {
-                        User[username].Add(connectionId);
+                        User_Usernames_By_Connection.Users[username].Add(connectionId);
                     }
                     else
                     {
-                        User.Add(username, new List<string> { connectionId });
+                        User_Usernames_By_Connection.Users.Add(username, new List<string> { connectionId });
                     }
                 }
             }
@@ -60,7 +58,7 @@ namespace Tessenger.Server.Hubs
             {
                 foreach (var item in meMemberOrAdmin)
                 {
-                    GroupUser[item.Username].Add(connectionId);
+                    Group_UsernameMembers.Groups[item.Username].Add(connectionId);
                     await _AuthHubContext.Groups.AddToGroupAsync(connectionId, item.Username);
 
                 }
@@ -68,18 +66,24 @@ namespace Tessenger.Server.Hubs
         }
 
         public override Task OnConnectedAsync()
-        {                              
+        {
             return base.OnConnectedAsync();
         }
 
-        public override Task OnDisconnectedAsync(Exception? exception)
+        public override  Task OnDisconnectedAsync(Exception? exception)
         {
             try
             {
-                var username = User.FirstOrDefault(c => c.Value.Contains(Context.ConnectionId)).Key;
-                User[username].Remove(Context.ConnectionId);
-                GroupUser[username].Remove(Context.ConnectionId);
-                Groups.RemoveFromGroupAsync(Context.ConnectionId, username);
+                 Task.Run(() =>
+                  {
+                      var username = User_Usernames_By_Connection.Users.FirstOrDefault(c => c.Value.Contains(Context.ConnectionId)).Key;
+                      User_Usernames_By_Connection.Users[username].Remove(Context.ConnectionId);
+                      foreach (var item in Group_UsernameMembers.Groups)
+                      {
+                          Group_UsernameMembers.Groups[item.Key].Remove(Context.ConnectionId);
+                          Groups.RemoveFromGroupAsync(Context.ConnectionId, item.Key);
+                      }
+                  });
             }
             catch (Exception)
             {
