@@ -13,19 +13,20 @@ namespace Tessenger.Server.Authentications
         {
             this.configuration = configuration;
         }
-
+                                                                                                                                       
         public void OnAuthorization(AuthorizationFilterContext context )
         {
             var header_Key = context.HttpContext.Request.Headers["x-api-key"].FirstOrDefault();
             var temp_header_Key = context.HttpContext.Request.Headers["x-api-key-temp"].FirstOrDefault();
 
+            var path = context.HttpContext.Request.Path.Value;
             if(temp_header_Key == null)
             {
                 var user = User_Usernames_By_Connection.Users;
                 var t = user.Values.FirstOrDefault(c => c.Contains(header_Key));
                 if (t == null)
                 {
-                    context.Result = new UnauthorizedResult();
+                  // context.Result = new UnauthorizedResult();
                 }
             }
             

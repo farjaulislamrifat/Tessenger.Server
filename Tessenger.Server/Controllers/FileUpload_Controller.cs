@@ -56,6 +56,8 @@ namespace Tessenger.Server.Controllers
         [HttpGet("Get/FileDownloadUrlFromFilePath/{path}")]
         public async Task<string> GetFileDownloadUrlFromFilePath(string path)
         {
+
+            path = path.Replace("`", "/");
             var userId = configuration.GetValue<string>("AzureAuthenticationData:AzureUserId");
             var driveid = await graphServiceClient.Users[userId].Drive.GetAsync();
             var file = await graphServiceClient.Drives[driveid.Id].Items["root"].ItemWithPath(path).GetAsync();

@@ -70,20 +70,19 @@ namespace Tessenger.Server.Hubs
             return base.OnConnectedAsync();
         }
 
-        public override  Task OnDisconnectedAsync(Exception? exception)
+        public override Task OnDisconnectedAsync(Exception? exception)
         {
             try
             {
-                 Task.Run(() =>
-                  {
-                      var username = User_Usernames_By_Connection.Users.FirstOrDefault(c => c.Value.Contains(Context.ConnectionId)).Key;
-                      User_Usernames_By_Connection.Users[username].Remove(Context.ConnectionId);
-                      foreach (var item in Group_UsernameMembers.Groups)
-                      {
-                          Group_UsernameMembers.Groups[item.Key].Remove(Context.ConnectionId);
-                          Groups.RemoveFromGroupAsync(Context.ConnectionId, item.Key);
-                      }
-                  });
+                
+                     var username = User_Usernames_By_Connection.Users.FirstOrDefault(c => c.Value.Contains(Context.ConnectionId)).Key;
+                     User_Usernames_By_Connection.Users[username].Remove(Context.ConnectionId);
+                     foreach (var item in Group_UsernameMembers.Groups)
+                     {
+                         Group_UsernameMembers.Groups[item.Key].Remove(Context.ConnectionId);
+                         Groups.RemoveFromGroupAsync(Context.ConnectionId, item.Key);
+                     }
+             
             }
             catch (Exception)
             {
@@ -91,6 +90,9 @@ namespace Tessenger.Server.Hubs
             }
             return base.OnDisconnectedAsync(exception);
         }
+
+
+
 
 
     }

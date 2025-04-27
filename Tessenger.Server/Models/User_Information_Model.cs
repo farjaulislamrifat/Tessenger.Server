@@ -23,6 +23,12 @@ namespace Tessenger.Server.Models
         [Column("first_name")]
         public string First_Name { get; set; }
 
+        [Column("full_name")]
+        public string Full_Name { get; set; }
+
+        [Column("middle_name")]
+        public string Middle_Name { get; set; }
+
         [Column("last_name")]
         public string Last_Name { get; set; }
 
@@ -75,5 +81,5 @@ namespace Tessenger.Server.Models
         [Column("address")]
         public string Address { get; set; }
     }
-  
+
 }

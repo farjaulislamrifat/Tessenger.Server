@@ -96,7 +96,10 @@ namespace Tessenger.Server.Controllers
         [HttpGet("GET/Username_Password/Temp/{username}&{password}")]
         public async Task<ActionResult<User_Account_Model>> GetUser_Account_ModelUsername_Password(string username, string password)
         {
-           
+
+            password = await algorithoms .Decryption(password, configuration.GetSection("PublicKey").Value, configuration.GetSection("SecretKey").Value);
+
+
             var user_Account_Model = _context.User_Account_Model.FirstOrDefault(c => c.Username == username && c.Password == password);
 
             if (user_Account_Model == null)
