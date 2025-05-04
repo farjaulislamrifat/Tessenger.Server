@@ -5,18 +5,13 @@ using System.Diagnostics.Contracts;
 namespace Tessenger.Server.Models
 {
     public class Friend_Request_Send_Model
-    {
+    {   
         [Key]
         [Column("id")]
-        public uint Id { get; set; }
-        [Column("name")]
-        public string Name { get; set; }
+        public ulong Id { get; set; }
         [Column("username")]
         public string Username { get; set; }
-        [Column("send_time")]
-        public DateTime Send_Time { get; set; }
-        [Column("message")]
-        public string Message { get; set; }
-
+        [Column("members")]
+        public List<ulong> Members_Info { get; set; }
     }
 }

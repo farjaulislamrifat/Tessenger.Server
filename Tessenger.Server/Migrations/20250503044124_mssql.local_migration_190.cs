@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Tessenger.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class mssqllocal_migration_304 : Migration
+    public partial class mssqllocal_migration_190 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -29,15 +29,30 @@ namespace Tessenger.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Friend_Request_Send_Model",
+                name: "Friend_Request_Info_Model",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "bigint", nullable: false)
+                    id = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    send_time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    message = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    is_accepted = table.Column<bool>(type: "bit", nullable: false),
+                    created_at = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Friend_Request_Info_Model", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Friend_Request_Send_Model",
+                columns: table => new
+                {
+                    id = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    members = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -167,6 +182,8 @@ namespace Tessenger.Server.Migrations
                     email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     phone_number = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     first_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    full_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    middle_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     last_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     profile_picture = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     bio = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -211,6 +228,9 @@ namespace Tessenger.Server.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Education_Model");
+
+            migrationBuilder.DropTable(
+                name: "Friend_Request_Info_Model");
 
             migrationBuilder.DropTable(
                 name: "Friend_Request_Send_Model");

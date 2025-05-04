@@ -97,6 +97,8 @@ namespace Tessenger.Server.Controllers
         public async Task<ActionResult<User_Account_Model>> GetUser_Account_ModelUsername_Password(string username, string password)
         {
 
+            password = password.Replace("`", "/");
+
             password = await algorithoms .Decryption(password, configuration.GetSection("PublicKey").Value, configuration.GetSection("SecretKey").Value);
 
 

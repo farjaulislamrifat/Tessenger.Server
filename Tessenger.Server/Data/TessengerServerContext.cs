@@ -23,6 +23,7 @@ namespace Tessenger.Server.Data
         public DbSet<Tessenger.Server.Models.User_Account_Settings_Model> User_Account_Settings_Model { get; set; } = default!;
         public DbSet<Tessenger.Server.Models.Website_Model> Website_Model { get; set; } = default!;
         public DbSet<Tessenger.Server.Models.Education_Model> Education_Model { get; set; } = default!;
+        public DbSet<Tessenger.Server.Models.Friend_Request_Info_Model> Friend_Request_Info_Model { get; set; } = default!;
  
        
 

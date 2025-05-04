@@ -61,14 +61,22 @@ namespace Tessenger.Server.Migrations
                     b.ToTable("Education_Model");
                 });
 
-            modelBuilder.Entity("Tessenger.Server.Models.Friend_Request_Send_Model", b =>
+            modelBuilder.Entity("Tessenger.Server.Models.Friend_Request_Info_Model", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<decimal>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("decimal(20,0)")
                         .HasColumnName("id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
+
+                    b.Property<DateTime>("Created_At")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("Is_Accepted")
+                        .HasColumnType("bit")
+                        .HasColumnName("is_accepted");
 
                     b.Property<string>("Message")
                         .IsRequired()
@@ -80,9 +88,29 @@ namespace Tessenger.Server.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
 
-                    b.Property<DateTime>("Send_Time")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("send_time");
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("username");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Friend_Request_Info_Model");
+                });
+
+            modelBuilder.Entity("Tessenger.Server.Models.Friend_Request_Send_Model", b =>
+                {
+                    b.Property<decimal>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(20,0)")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
+
+                    b.PrimitiveCollection<string>("Members_Info")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("members");
 
                     b.Property<string>("Username")
                         .IsRequired()
