@@ -28,7 +28,6 @@ namespace Tessenger.Server.Controllers
             this.tessengerServerContext = tessengerServerContext;
         }
 
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User_Information_Model>>> GetUser_Information()
         {

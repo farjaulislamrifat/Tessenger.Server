@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Tessenger.Server.Authentications;
 using Tessenger.Server.Data;
 using Tessenger.Server.Models;
 
@@ -12,6 +13,8 @@ namespace Tessenger.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ServiceFilter(typeof(Service_AuthFillter))]
+
     public class Friend_Request_Info_ModelController : ControllerBase
     {
         private readonly TessengerServerContext _context;

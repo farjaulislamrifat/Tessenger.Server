@@ -4,7 +4,7 @@ using System.Diagnostics.Contracts;
 
 namespace Tessenger.Server.Models
 {
-    public class Friend_Request_Send_Model
+    public class Friend_Request_Model
     {   
         [Key]
         [Column("id")]

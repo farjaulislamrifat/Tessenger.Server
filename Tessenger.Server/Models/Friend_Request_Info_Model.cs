@@ -17,7 +17,9 @@ namespace Tessenger.Server.Models
         [Column("is_accepted")]
         public bool Is_Accepted { get; set; }
         [Column("created_at")]
-        public DateTime Created_At { get; set; } 
+        public DateTime Created_At { get; set; }
+        [Column("requesttype")]
+        public Algorithoms.RequestType RequestType { get; set; } 
 
     }
 }

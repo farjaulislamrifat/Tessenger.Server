@@ -40,7 +40,7 @@ namespace Tessenger.Server.Controllers
         [HttpGet("GET/USERNAME/{username}")]
         public async Task<ActionResult<User_Account_Model>> GetUser_Account_Model(string username)
         {
-           
+
             var user_Account_Model = _context.User_Account_Model.FirstOrDefault(c => c.Username == username);
 
             if (user_Account_Model == null)
@@ -65,7 +65,7 @@ namespace Tessenger.Server.Controllers
         [HttpGet("GET/Email/{email}")]
         public async Task<ActionResult<User_Account_Model>> GetUser_Account_ModelByEmail(string email)
         {
-            
+
             var username = (await _contextFactory.CreateDbContextAsync()).User_Information_Model.FirstOrDefault(c => c.Email == email).Username;
 
             var user_Account_Model = _context.User_Account_Model.FirstOrDefault(c => c.Username == username);
@@ -81,7 +81,7 @@ namespace Tessenger.Server.Controllers
         [HttpGet("GET/Email_Password/Temp/{email}&{password}")]
         public async Task<ActionResult<User_Account_Model>> GetUser_Account_Model(string email, string password)
         {
-           
+
             var username = (await _contextFactory.CreateDbContextAsync()).User_Information_Model.FirstOrDefault(c => c.Email == email).Username;
             var user_Account_Model = _context.User_Account_Model.FirstOrDefault(c => c.Username == username && c.Password == password);
 
@@ -99,7 +99,7 @@ namespace Tessenger.Server.Controllers
 
             password = password.Replace("`", "/");
 
-            password = await algorithoms .Decryption(password, configuration.GetSection("PublicKey").Value, configuration.GetSection("SecretKey").Value);
+            password = await algorithoms.Decryption(password, configuration.GetSection("PublicKey").Value, configuration.GetSection("SecretKey").Value);
 
 
             var user_Account_Model = _context.User_Account_Model.FirstOrDefault(c => c.Username == username && c.Password == password);
@@ -111,10 +111,51 @@ namespace Tessenger.Server.Controllers
             return user_Account_Model;
         }
 
+        [HttpGet("GET/UsersByUsernameWithCount/{username}&{previousUsersString}&{count}")]
+        public async Task<ActionResult<IEnumerable<User_Show_Client>>> GetUser_Account_ModelByUsernameWithCountAndArg(string username, string previousUsersString, int count)
+        {
+
+            var previousUsers = new List<string>();
+            if (previousUsersString != null && previousUsersString != "null")
+            {
+                previousUsers = previousUsersString.Split(',').ToList();
+            }
+
+            var result = new List<User_Show_Client>();
+
+
+            foreach (var user in (await _contextFactory.CreateDbContextAsync()).User_Account_Model.ToList())
+            {
+
+                if (user.Username == username)
+                {
+                    continue;
+                }
+
+                if (!previousUsers.Contains(user.Username))
+                {
+                    var userInfo = (await _contextFactory.CreateDbContextAsync()).User_Information_Model.FirstOrDefault(c => c.Username == user.Username);
+                    result.Add(new User_Show_Client()
+                    {
+                        Id = Convert.ToInt32(user.Id),
+                        Name = userInfo.Full_Name,
+                        Username = user.Username,
+                        ImagePath = userInfo.Profile_Picture,
+                        MutualFriends = 0,
+                    });
+                }
+
+            }
+
+
+            return Ok(result);
+        }
+
+
         [HttpGet("GET/User_Exists/{username}")]
         public async Task<ActionResult<bool>> GetUser_Exists(string username)
         {
-            
+
             var User = (await _contextFactory.CreateDbContextAsync()).User_Account_Model.Any(c => c.Username == username);
             return Ok(User);
         }
@@ -144,7 +185,7 @@ namespace Tessenger.Server.Controllers
         [HttpPut("PUT/Username/{username}")]
         public async Task<ActionResult<bool>> PutUser_Account_Model(string username, User_Account_Model user_Account_Model)
         {
-           
+
             if (username != user_Account_Model.Username)
             {
                 return Ok(false);
